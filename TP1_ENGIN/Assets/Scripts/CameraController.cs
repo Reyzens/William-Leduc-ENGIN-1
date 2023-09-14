@@ -9,10 +9,6 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Vector2 m_clampingXRotationValues = Vector2.zero;
 
-    private void Awake()
-    {
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -20,10 +16,12 @@ public class CameraController : MonoBehaviour
         UpdateVerticalMovements();
         UpdateCameraScroll();
     }
+
     private void FixedUpdate()
     {
-        FixedUpdateCameraObstructionControl();
+        MoveCameraInFrontOfObstructionsFUpdate();
     }
+
     private void UpdateHorizontalMovements()
     {
         float currentAngleX = Input.GetAxis("Mouse X") * m_rotationSpeed;
@@ -52,38 +50,33 @@ public class CameraController : MonoBehaviour
         if (Input.mouseScrollDelta.y != 0)
         {
             //TODO: Faire une vérification selon la distance la plus proche ou la plus éloignée
-            //Que je souhaite entre ma caméra et mon objet
+                //Que je souhaite entre ma caméra et mon objet
 
-            //TODO: Lerp plutôt que d'effectuer immédiatement la translation
+            //TODO: Lerp plutôt que d'effectuer immédiatement la translation de la caméra
             transform.Translate(Vector3.forward * Input.mouseScrollDelta.y, Space.Self);
         }
     }
 
-    private void FixedUpdateCameraObstructionControl()
+    private void MoveCameraInFrontOfObstructionsFUpdate()
     {
         // Bit shift the index of the layer (8) to get a bit mask
         int layerMask = 1 << 8;
 
-        // This would cast rays only against colliders in layer 8.
-        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-        layerMask = ~layerMask;
-
         RaycastHit hit;
+
         var vecteurDiff = transform.position - m_objectToLookAt.position;
         var distance = vecteurDiff.magnitude;
 
-        // Does the ray intersect any objects excluding the player layer
         if (Physics.Raycast(m_objectToLookAt.position, vecteurDiff, out hit, distance, layerMask))
         {
+            //J'ai un objet entre mon focus et ma caméra
             Debug.DrawRay(m_objectToLookAt.position, vecteurDiff.normalized * hit.distance, Color.yellow);
-            transform.SetLocalPositionAndRotation(hit.point, transform.rotation);
-
+            transform.SetPositionAndRotation(hit.point, transform.rotation);
         }
         else
         {
-            Debug.DrawRay(m_objectToLookAt.position, vecteurDiff * 1000, Color.white);
-
-
+            //Je n'en ai pas
+            Debug.DrawRay(m_objectToLookAt.position, vecteurDiff, Color.white);
         }
     }
 

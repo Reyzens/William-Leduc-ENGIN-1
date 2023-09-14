@@ -18,7 +18,7 @@ public class FreeState : CharacterState
         var vectorOnFloorLeft = Vector3.ProjectOnPlane(-m_stateMachine.Camera.transform.right, Vector3.down);
         var vectorOnFloorRigth = Vector3.ProjectOnPlane(m_stateMachine.Camera.transform.right, Vector3.up);
         var slowingVector = Vector3.ProjectOnPlane(-m_stateMachine.Camera.transform.forward, Vector3.down);
-     
+        
         vectorOnFloorFront.Normalize();
         vectorOnFloorBack.Normalize();
         vectorOnFloorLeft.Normalize();
@@ -45,8 +45,10 @@ public class FreeState : CharacterState
             m_stateMachine.RB.velocity = m_stateMachine.RB.velocity.normalized;
             m_stateMachine.RB.velocity *= m_stateMachine.MaxVelocity;
         }
+        float fowardComponent = Vector3.Dot(m_stateMachine.RB.velocity, vectorOnFloorFront);
+        float SideComponent = Vector3.Dot(m_stateMachine.RB.velocity, vectorOnFloorRigth);
+        m_stateMachine.UpdateAnimationValues(new Vector2(SideComponent, fowardComponent));
         
-
         //TODO 31 AOÛT:
         //Appliquer les déplacements relatifs à la caméra dans les 3 autres directions
         //Avoir des vitesses de déplacements maximales différentes vers les côtés et vers l'arrière

@@ -8,7 +8,7 @@ public class JumpState : CharacterState
     public override void OnEnter()
     {
         Debug.Log("Enter state: JumpState\n");
-
+        m_stateMachine.Animator.SetTrigger("Jump");
         //Effectuer le saut
         m_stateMachine.RB.AddForce(Vector3.up * m_stateMachine.JumpIntensity, ForceMode.Acceleration);
         m_currentStateTimer = STATE_EXIT_TIMER;
@@ -26,12 +26,17 @@ public class JumpState : CharacterState
     public override void OnUpdate()
     {
         m_currentStateTimer -= Time.deltaTime;
+        
     }
 
-    public override bool CanEnter()
+    public override bool CanEnter(CharacterState currentState)
     {
+        if(currentState is FreeState)
+        {
+            return Input.GetKeyDown(KeyCode.Space);
+        }
         //This must be run in Update absolutely
-        return Input.GetKeyDown(KeyCode.Space);
+        return false;
     }
 
     public override bool CanExit()

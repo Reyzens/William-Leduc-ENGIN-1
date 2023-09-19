@@ -25,7 +25,7 @@ public class FreeState : CharacterState
         if(m_stateMachine.RB.velocity.magnitude > 0)
         m_stateMachine.m_movementPositionVector = Vector3.zero;
 
-        // Check for input and add movement in the desired directions.
+        
         if (Input.GetKey(KeyCode.W))
         {
             m_stateMachine.m_movementPositionVector += vectorOnFloorFront;
@@ -42,9 +42,6 @@ public class FreeState : CharacterState
         {
             m_stateMachine.m_movementPositionVector += vectorOnFloorRigth;
         }
-       
-       
-        // Normalize the movement vector if necessary.
         if (m_stateMachine.m_movementPositionVector != Vector3.zero)
         {
             m_stateMachine.m_movementPositionVector.Normalize();
@@ -55,14 +52,13 @@ public class FreeState : CharacterState
     {    
         m_stateMachine.RB.AddForce(m_stateMachine.m_movementPositionVector * m_stateMachine.AccelerationValue, ForceMode.Acceleration);
         m_stateMachine.RB.velocity -= m_stateMachine.SlowingValue * m_stateMachine.RB.velocity;
+
         if (m_stateMachine.RB.velocity.magnitude > m_stateMachine.MaxFowardVelocity)
         {
             m_stateMachine.RB.velocity = m_stateMachine.RB.velocity.normalized;
             m_stateMachine.RB.velocity *= m_stateMachine.MaxFowardVelocity;
         }
-
-        float ALLCOMPONENT = Vector3.Dot(m_stateMachine.RB.velocity, m_stateMachine.m_movementPositionVector);
-        m_stateMachine.UpdateAnimationValues();
+        m_stateMachine.UpdateMovementAnimationValues();
         
         //TODO 31 AOÛT:
         //Appliquer les déplacements relatifs à la caméra dans les 3 autres directions
@@ -77,12 +73,41 @@ public class FreeState : CharacterState
         Debug.Log("Exit state: FreeState\n");
     }
 
-    public override bool CanEnter()
+    public override bool CanEnter(CharacterState currentState)
     {
-        //Je ne peux entrer dans le FreeState que si je touche le sol
-        return m_stateMachine.IsInContactWithFloor();
+        if (currentState is JumpState)
+        {
+            //Je ne peux entrer dans le FreeState que si je touche le sol
+            return m_stateMachine.IsInContactWithFloor();
+        }
+        if (currentState is AttackingState)
+        {   
+            //CONDITIONS
+            return true;
+        }
+        if (currentState is OnHitState)
+        {
+            //CONDITIONS
+            return true;
+        }
+        if (currentState is FallingState) 
+        {
+            //CONDITIONS
+            return true;
+        }
+        if(currentState is OnGettingUpState) 
+        {
+            //CONDITIONS
+            return true;
+        }
+        if(currentState is StunnedState) 
+        {
+            //CONDITIONS
+            return true;        
+        }
+        return false;
     }
-
+    
     public override bool CanExit()
     {
         return true;

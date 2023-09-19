@@ -18,7 +18,7 @@ public class CharacterControllerStateMachine : MonoBehaviour
     public float MaxSidedVelocity { get; private set; }
     [field: SerializeField]
     public float MaxBackVelocity { get; private set; }
-    public float JumpIntensity { get; private set; } = 1000.0f;
+    public float JumpIntensity { get; private set; } = 300.0f;
 
     public Vector3 m_movementPositionVector = Vector3.zero;
 
@@ -33,6 +33,12 @@ public class CharacterControllerStateMachine : MonoBehaviour
         m_possibleStates = new List<CharacterState>();
         m_possibleStates.Add(new FreeState());
         m_possibleStates.Add(new JumpState());
+        m_possibleStates.Add(new AttackingState());
+        m_possibleStates.Add(new FallingState());
+        m_possibleStates.Add(new OnGettingUpState());
+        m_possibleStates.Add(new OnGroundState());
+        m_possibleStates.Add(new OnHitState());
+        m_possibleStates.Add(new StunnedState());
     }
 
     // Start is called before the first frame update
@@ -52,8 +58,8 @@ public class CharacterControllerStateMachine : MonoBehaviour
     private void Update()
     {
         m_currentState.OnUpdate();
-      
         TryStateTransition();
+        Animator.SetBool("TouchGround", m_floorTrigger.IsOnFloor);
     }
 
     // Update is called once per frame
@@ -77,7 +83,7 @@ public class CharacterControllerStateMachine : MonoBehaviour
                 continue;
             }
 
-            if (state.CanEnter())
+            if (state.CanEnter(m_currentState))
             {
                 //Quitter le state actuel
                 m_currentState.OnExit();
@@ -88,16 +94,48 @@ public class CharacterControllerStateMachine : MonoBehaviour
             }
         }
     }
-
+   
     public bool IsInContactWithFloor()
     {
         return m_floorTrigger.IsOnFloor;
     }
-
-    public void UpdateAnimationValues()
+    
+    public void UpdateMovementAnimationValues()
     {
-        Animator.SetFloat("MoveX", m_movementPositionVector.x / MaxSidedVelocity * 10);
-        Animator.SetFloat("MoveY", m_movementPositionVector.z / MaxFowardVelocity * 10);
+        Animator.SetFloat("MoveX", RB.velocity.x / MaxSidedVelocity * 10);
+        Animator.SetFloat("MoveY", RB.velocity.z / MaxFowardVelocity * 10);
+
+    }
+
+ 
+
+    public void UpdateAttackAnimationValues()
+    {
+
+    }
+
+    public void UpdateStunnedAnimationValues()
+    {
+
+    }
+
+    public void UpdateOnHitAnimationValues()
+    {
+
+    }
+
+    public void UpdateOnGroundAnimationValues()
+    {
+
+    }
+
+    public void UpdateOnGettingUpAnimationValues()
+    {
+
+    }
+
+    public void UpdateFallingAnimationValues()
+    {
 
     }
 }

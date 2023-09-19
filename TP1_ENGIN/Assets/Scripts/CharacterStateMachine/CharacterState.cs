@@ -1,5 +1,6 @@
 public abstract class CharacterState : IState
 {
+
     protected CharacterControllerStateMachine m_stateMachine;
 
     public void OnStart(CharacterControllerStateMachine stateMachine)
@@ -23,13 +24,16 @@ public abstract class CharacterState : IState
     {
     }
 
-    public virtual bool CanEnter()
+    public virtual bool CanEnter(CharacterState currentState)
     {
         throw new System.NotImplementedException();
+        
     }
 
     public virtual bool CanExit()
     {
         throw new System.NotImplementedException();
     }
+
+ 
 }

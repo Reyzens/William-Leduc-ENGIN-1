@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class FreeState : CharacterState
 {
@@ -9,45 +10,59 @@ public class FreeState : CharacterState
 
     public override void OnUpdate()
     {
-    }
-
-    public override void OnFixedUpdate()
-    {
+        // Reset the move direction vector.
         var vectorOnFloorFront = Vector3.ProjectOnPlane(m_stateMachine.Camera.transform.forward, Vector3.up);
-        var vectorOnFloorBack = Vector3.ProjectOnPlane(- m_stateMachine.Camera.transform.forward, Vector3.down);
+        var vectorOnFloorBack = Vector3.ProjectOnPlane(-m_stateMachine.Camera.transform.forward, Vector3.down);
         var vectorOnFloorLeft = Vector3.ProjectOnPlane(-m_stateMachine.Camera.transform.right, Vector3.down);
         var vectorOnFloorRigth = Vector3.ProjectOnPlane(m_stateMachine.Camera.transform.right, Vector3.up);
-        var slowingVector = Vector3.ProjectOnPlane(-m_stateMachine.Camera.transform.forward, Vector3.down);
         
+
         vectorOnFloorFront.Normalize();
         vectorOnFloorBack.Normalize();
         vectorOnFloorLeft.Normalize();
         vectorOnFloorRigth.Normalize();
+        
+        if(m_stateMachine.RB.velocity.magnitude > 0)
+        m_stateMachine.m_movementPositionVector = Vector3.zero;
 
+        // Check for input and add movement in the desired directions.
         if (Input.GetKey(KeyCode.W))
         {
-            m_stateMachine.RB.AddForce(vectorOnFloorFront * m_stateMachine.FowardAccelerationValue, ForceMode.Acceleration);
+            m_stateMachine.m_movementPositionVector += vectorOnFloorFront;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            m_stateMachine.RB.AddForce(vectorOnFloorBack * m_stateMachine.FowardAccelerationValue, ForceMode.Acceleration);
+            m_stateMachine.m_movementPositionVector += vectorOnFloorBack;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            m_stateMachine.RB.AddForce(vectorOnFloorLeft * m_stateMachine.SideAccelerationValue, ForceMode.Acceleration);
+            m_stateMachine.m_movementPositionVector += vectorOnFloorLeft;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            m_stateMachine.RB.AddForce(vectorOnFloorRigth * m_stateMachine.SideAccelerationValue, ForceMode.Acceleration);
+            m_stateMachine.m_movementPositionVector += vectorOnFloorRigth;
         }
-        if (m_stateMachine.RB.velocity.magnitude > m_stateMachine.MaxVelocity)
+       
+       
+        // Normalize the movement vector if necessary.
+        if (m_stateMachine.m_movementPositionVector != Vector3.zero)
+        {
+            m_stateMachine.m_movementPositionVector.Normalize();
+        }
+    }
+
+    public override void OnFixedUpdate()
+    {    
+        m_stateMachine.RB.AddForce(m_stateMachine.m_movementPositionVector * m_stateMachine.AccelerationValue, ForceMode.Acceleration);
+        m_stateMachine.RB.velocity -= m_stateMachine.SlowingValue * m_stateMachine.RB.velocity;
+        if (m_stateMachine.RB.velocity.magnitude > m_stateMachine.MaxFowardVelocity)
         {
             m_stateMachine.RB.velocity = m_stateMachine.RB.velocity.normalized;
-            m_stateMachine.RB.velocity *= m_stateMachine.MaxVelocity;
+            m_stateMachine.RB.velocity *= m_stateMachine.MaxFowardVelocity;
         }
-        float fowardComponent = Vector3.Dot(m_stateMachine.RB.velocity, vectorOnFloorFront);
-        float SideComponent = Vector3.Dot(m_stateMachine.RB.velocity, vectorOnFloorRigth);
-        m_stateMachine.UpdateAnimationValues(new Vector2(SideComponent, fowardComponent));
+
+        float ALLCOMPONENT = Vector3.Dot(m_stateMachine.RB.velocity, m_stateMachine.m_movementPositionVector);
+        m_stateMachine.UpdateAnimationValues();
         
         //TODO 31 AOÛT:
         //Appliquer les déplacements relatifs à la caméra dans les 3 autres directions

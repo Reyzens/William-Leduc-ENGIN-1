@@ -9,20 +9,24 @@ public class CharacterControllerStateMachine : MonoBehaviour
     [field: SerializeField]
     public Animator Animator { get; private set; }  
     [field: SerializeField]
-    public float FowardAccelerationValue { get; private set; }
-    [field: SerializeField]
-    public float SideAccelerationValue { get; private set; }
+    public float AccelerationValue { get; private set; }
     [field: SerializeField]
     public float SlowingValue { get; private set; }
     [field: SerializeField]
-    public float MaxVelocity { get; private set; }
+    public float MaxFowardVelocity { get; private set; }
     [field: SerializeField]
+    public float MaxSidedVelocity { get; private set; }
+    [field: SerializeField]
+    public float MaxBackVelocity { get; private set; }
     public float JumpIntensity { get; private set; } = 1000.0f;
+
+    public Vector3 m_movementPositionVector = Vector3.zero;
 
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
     private CharacterState m_currentState;
     private List<CharacterState> m_possibleStates;
+    
 
     private void Awake()
     {
@@ -48,6 +52,7 @@ public class CharacterControllerStateMachine : MonoBehaviour
     private void Update()
     {
         m_currentState.OnUpdate();
+      
         TryStateTransition();
     }
 
@@ -89,11 +94,10 @@ public class CharacterControllerStateMachine : MonoBehaviour
         return m_floorTrigger.IsOnFloor;
     }
 
-    public void UpdateAnimationValues(Vector3 movementVectorValues)
+    public void UpdateAnimationValues()
     {
-        movementVectorValues = new Vector2(movementVectorValues.x/MaxVelocity, movementVectorValues.y/MaxVelocity);
-        Animator.SetFloat("MoveX", movementVectorValues.x);
-        Animator.SetFloat("MoveY", movementVectorValues.y);
+        Animator.SetFloat("MoveX", m_movementPositionVector.x / MaxSidedVelocity * 10);
+        Animator.SetFloat("MoveY", m_movementPositionVector.z / MaxFowardVelocity * 10);
 
     }
 }

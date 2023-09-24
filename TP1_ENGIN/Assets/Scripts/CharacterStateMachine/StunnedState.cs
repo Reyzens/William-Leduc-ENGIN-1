@@ -27,7 +27,10 @@ public class StunnedState : CharacterState
 
     public override bool CanEnter(CharacterState currentState)
     {
+        if (currentState is JumpState)
+        {
 
+        }
         return false;
     }
 

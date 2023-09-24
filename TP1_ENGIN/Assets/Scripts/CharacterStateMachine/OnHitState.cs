@@ -27,7 +27,14 @@ public class OnHitState : CharacterState
 
     public override bool CanEnter(CharacterState currentState)
     {
-
+        if(currentState is FreeState)
+        {
+        
+        }
+        if(currentState is AttackingState)   
+        { 
+        
+        }
         return false;
     }
 

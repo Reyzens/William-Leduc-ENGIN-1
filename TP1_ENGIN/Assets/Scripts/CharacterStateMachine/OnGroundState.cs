@@ -27,8 +27,29 @@ public class OnGroundState : CharacterState
 
     public override bool CanEnter(CharacterState currentState)
     {
+        if(currentState is JumpState)
+        {
+            if(m_stateMachine.IsInContactWithFloor() && m_stateMachine.CharacterJumpDistance() >= 3.0f)
+            {
+                return true;
+            }
+        }
+        if (currentState is StunnedState)
+        {
+            if (m_stateMachine.IsInContactWithFloor())
+            {
+                return true;
+            }
+        }
+        if (currentState is FallingState)
+        {
+            if (m_stateMachine.IsInContactWithFloor() && m_stateMachine.CharacterJumpDistance() >= 3.0f)
+            {
+                return true;
+            }
+        }
 
-        return false;
+            return false;
     }
 
     public override bool CanExit()

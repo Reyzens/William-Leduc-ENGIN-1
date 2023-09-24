@@ -27,6 +27,11 @@ public class OnGettingUpState : CharacterState
 
     public override bool CanEnter(CharacterState currentState)
     {
+        if (currentState is OnGettingUpState)
+        {
+
+        }
+        
 
         return false;
     }

@@ -27,7 +27,11 @@ public class FallingState : CharacterState
 
     public override bool CanEnter(CharacterState currentState)
     {
+        if (currentState is FreeState)
+        {
 
+        }
+       
         return false;
     }
 

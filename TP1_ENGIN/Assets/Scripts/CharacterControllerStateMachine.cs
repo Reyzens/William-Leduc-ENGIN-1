@@ -13,14 +13,18 @@ public class CharacterControllerStateMachine : MonoBehaviour
     [field: SerializeField]
     public float SlowingValue { get; private set; }
     [field: SerializeField]
-    public float MaxFowardVelocity { get; private set; }
+    public float FowardRatio { get; private set; }
     [field: SerializeField]
-    public float MaxSidedVelocity { get; private set; }
+    public float SidedRatio { get; private set; }
     [field: SerializeField]
     public float MaxBackVelocity { get; private set; }
-    public float JumpIntensity { get; private set; } = 300.0f;
+    [field: SerializeField]
+    public float JumpIntensity { get; private set; }
+    
 
     public Vector3 m_movementPositionVector = Vector3.zero;
+    public Vector3 m_playerCharacterPositionBeforeJump = Vector3.zero;
+    public Vector3 m_playerCharacterPositionAfterJump = Vector3.zero;
 
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
@@ -60,6 +64,8 @@ public class CharacterControllerStateMachine : MonoBehaviour
         m_currentState.OnUpdate();
         TryStateTransition();
         Animator.SetBool("TouchGround", m_floorTrigger.IsOnFloor);
+       
+        
     }
 
     // Update is called once per frame
@@ -99,11 +105,22 @@ public class CharacterControllerStateMachine : MonoBehaviour
     {
         return m_floorTrigger.IsOnFloor;
     }
-    
+
+    public bool IsAttacking()
+    {
+        return Animator.GetBool("IsAttacking");
+    }
+
+    public float CharacterJumpDistance()
+    {
+        float dist = m_playerCharacterPositionBeforeJump.y - m_playerCharacterPositionAfterJump.y;
+        return Mathf.Abs(dist);
+    }
+
     public void UpdateMovementAnimationValues()
     {
-        Animator.SetFloat("MoveX", RB.velocity.x / MaxSidedVelocity * 10);
-        Animator.SetFloat("MoveY", RB.velocity.z / MaxFowardVelocity * 10);
+        Animator.SetFloat("MoveX", RB.velocity.x);
+        Animator.SetFloat("MoveY", RB.velocity.z);
 
     }
 

@@ -27,10 +27,9 @@ public class AttackingState : CharacterState
 
     public override bool CanEnter(CharacterState currentState)
     {
-        if (currentState is JumpState)
+        if (currentState is FreeState)
         {
-            //Je ne peux entrer dans le FreeState que si je touche le sol
-            return m_stateMachine.IsInContactWithFloor();
+            
         }
         return false;
     }

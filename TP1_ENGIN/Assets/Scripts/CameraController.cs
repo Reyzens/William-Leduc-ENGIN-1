@@ -8,6 +8,8 @@ public class CameraController : MonoBehaviour
     private float m_rotationSpeed = 1.0f;
     [SerializeField]
     private Vector2 m_clampingXRotationValues = Vector2.zero;
+    [SerializeField]
+    private Vector2 m_cameraClamping = Vector2.zero;
 
     // Update is called once per frame
     void Update()
@@ -48,13 +50,26 @@ public class CameraController : MonoBehaviour
 
     private void UpdateCameraScroll()
     {
+        Vector3 cameraScroll = Input.mouseScrollDelta;
+        var distanceCameraToCharacter = transform.position - m_objectToLookAt.position;
+        var distance = distanceCameraToCharacter.magnitude;
         if (Input.mouseScrollDelta.y != 0)
         {
-            //TODO: Faire une vérification selon la distance la plus proche ou la plus éloignée
-                //Que je souhaite entre ma caméra et mon objet
-
-            //TODO: Lerp plutôt que d'effectuer immédiatement la translation de la caméra
             transform.Translate(Vector3.forward * Input.mouseScrollDelta.y, Space.Self);
+            //TODO: Faire une vérification selon la distance la plus proche ou la plus éloignée
+            //Que je souhaite entre ma caméra et mon objet
+            if (distance <= m_cameraClamping.x)
+            {
+                transform.Translate(-Vector3.forward * m_cameraClamping.x, Space.Self);
+            }
+            if (distance >= m_cameraClamping.y) 
+            {
+                transform.Translate(Vector3.forward * m_cameraClamping.x, Space.Self);
+            }
+
+            
+            //TODO: Lerp plutôt que d'effectuer immédiatement la translation de la caméra
+
         }
     }
 

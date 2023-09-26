@@ -7,8 +7,9 @@ public class AttackingState : CharacterState
     public override void OnEnter()
     {
         Debug.Log("Enter state: Attacking\n");
+        m_stateMachine.Animator.SetTrigger("OnAttack");
 
-        
+
     }
 
     public override void OnExit()
@@ -29,7 +30,7 @@ public class AttackingState : CharacterState
     {
         if (currentState is FreeState)
         {
-            
+            return Input.GetMouseButtonDown(0);
         }
         return false;
     }

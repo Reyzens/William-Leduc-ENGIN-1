@@ -26,6 +26,7 @@ public class CameraController : MonoBehaviour
     {
         float currentAngleX = Input.GetAxis("Mouse X") * m_rotationSpeed;
         transform.RotateAround(m_objectToLookAt.position, m_objectToLookAt.up, currentAngleX);
+        
     }
 
     private void UpdateVerticalMovements()

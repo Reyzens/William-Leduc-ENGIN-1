@@ -81,19 +81,19 @@ public class FreeState : CharacterState
             return m_stateMachine.IsInContactWithFloor();
         }
         if (currentState is AttackingState)
-        {   
+        {
             //CONDITIONS
-            return true;
+            return m_stateMachine.IsAttack();
         }
         if (currentState is OnHitState)
         {
             //CONDITIONS
-            return true;
+            return m_stateMachine.IsHit();
         }
         if (currentState is FallingState) 
         {
             //CONDITIONS
-            return true;
+            return m_stateMachine.IsInContactWithFloor();
         }
         if(currentState is OnGettingUpState) 
         {
@@ -103,7 +103,7 @@ public class FreeState : CharacterState
         if(currentState is StunnedState) 
         {
             //CONDITIONS
-            return true;        
+            return m_stateMachine.IsStunned();
         }
         return false;
     }

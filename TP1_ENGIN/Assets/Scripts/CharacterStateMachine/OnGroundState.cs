@@ -6,14 +6,14 @@ public class OnGroundState : CharacterState
 
     public override void OnEnter()
     {
-        Debug.Log("Enter state: Attacking\n");
+        Debug.Log("Enter state: Ground\n");
 
 
     }
 
     public override void OnExit()
     {
-        Debug.Log("Exit state: Attacking\n");
+        Debug.Log("Exit state: Ground\n");
     }
 
     public override void OnFixedUpdate()
@@ -29,7 +29,7 @@ public class OnGroundState : CharacterState
     {
         if(currentState is JumpState)
         {
-            if(m_stateMachine.IsInContactWithFloor() && m_stateMachine.CharacterJumpDistance() >= 3.0f)
+            if(m_stateMachine.IsInContactWithFloor() && (m_stateMachine.CharacterJumpDistance() <= 3.0f))
             {
                 return true;
             }

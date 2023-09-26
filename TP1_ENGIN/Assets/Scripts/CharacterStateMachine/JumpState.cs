@@ -12,21 +12,25 @@ public class JumpState : CharacterState
         //Effectuer le saut
         m_stateMachine.RB.AddForce(Vector3.up * m_stateMachine.JumpIntensity, ForceMode.Acceleration);
         m_currentStateTimer = STATE_EXIT_TIMER;
+        m_stateMachine.m_playerCharacterPositionBeforeJump = m_stateMachine.RB.position;
     }
 
     public override void OnExit()
     {
         Debug.Log("Exit state: JumpState\n");
+        m_stateMachine.m_playerCharacterPositionAfterJump = m_stateMachine.RB.position;
     }
 
     public override void OnFixedUpdate()
     {
+       
     }
 
     public override void OnUpdate()
     {
         m_currentStateTimer -= Time.deltaTime;
-        
+       
+
     }
 
     public override bool CanEnter(CharacterState currentState)

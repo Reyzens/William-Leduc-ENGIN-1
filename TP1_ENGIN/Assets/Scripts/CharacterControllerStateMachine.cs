@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CharacterControllerStateMachine : MonoBehaviour
@@ -28,6 +29,7 @@ public class CharacterControllerStateMachine : MonoBehaviour
 
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
+    
     private CharacterState m_currentState;
     private List<CharacterState> m_possibleStates;
     
@@ -61,9 +63,10 @@ public class CharacterControllerStateMachine : MonoBehaviour
 
     private void Update()
     {
+        Animator.SetBool("TouchGround", m_floorTrigger.IsOnFloor);
         m_currentState.OnUpdate();
         TryStateTransition();
-        Animator.SetBool("TouchGround", m_floorTrigger.IsOnFloor);
+        
        
         
     }
@@ -109,6 +112,22 @@ public class CharacterControllerStateMachine : MonoBehaviour
     public bool IsAttacking()
     {
         return Animator.GetBool("IsAttacking");
+    }
+    
+    public bool IsStunned()
+    {
+        return true;
+    }
+
+    public bool IsHit()
+    {
+        
+        return true;
+    }
+
+    public bool IsAttack()
+    {
+        return true;
     }
 
     public float CharacterJumpDistance()

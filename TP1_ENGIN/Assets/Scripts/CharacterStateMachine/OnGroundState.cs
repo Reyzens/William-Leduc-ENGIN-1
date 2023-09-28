@@ -17,6 +17,7 @@ public class OnGroundState : CharacterState
     public override void OnExit()
     {
         Debug.Log("Exit state: Ground\n");
+        m_stateMachine.Animator.SetBool("Die", false);
     }
 
     public override void OnFixedUpdate()
@@ -26,10 +27,7 @@ public class OnGroundState : CharacterState
     public override void OnUpdate()
     {
         m_currentStateTimer -= Time.deltaTime;
-        if (m_currentStateTimer < 0.0f)
-        {
-            m_stateMachine.Animator.SetBool("Die", false);
-        }
+        
     }
 
     public override bool CanEnter(CharacterState currentState)

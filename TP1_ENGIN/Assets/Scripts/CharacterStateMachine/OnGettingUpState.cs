@@ -3,10 +3,13 @@ using UnityEngine;
 public class OnGettingUpState : CharacterState
 {
     private float m_currentStateTimer = 0.0f;
+    private const float STATE_EXIT_TIMER = 1f;
 
     public override void OnEnter()
     {
         Debug.Log("Enter state: Up\n");
+        m_currentStateTimer = STATE_EXIT_TIMER;
+        m_stateMachine.Animator.SetTrigger("OnUp");
 
 
     }

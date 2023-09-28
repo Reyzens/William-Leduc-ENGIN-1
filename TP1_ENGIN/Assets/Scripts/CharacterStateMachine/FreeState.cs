@@ -53,10 +53,10 @@ public class FreeState : CharacterState
         m_stateMachine.RB.AddForce(m_stateMachine.m_movementPositionVector * m_stateMachine.AccelerationValue, ForceMode.Acceleration);
         m_stateMachine.RB.velocity -= m_stateMachine.SlowingValue * m_stateMachine.RB.velocity;
 
-        if (m_stateMachine.RB.velocity.magnitude > m_stateMachine.FowardRatio)
+        if (m_stateMachine.RB.velocity.magnitude > m_stateMachine.MaxFowardVelocity)
         {
             m_stateMachine.RB.velocity = m_stateMachine.RB.velocity.normalized;
-            m_stateMachine.RB.velocity *= m_stateMachine.FowardRatio;
+            m_stateMachine.RB.velocity *= m_stateMachine.MaxFowardVelocity;
         }
         m_stateMachine.UpdateMovementAnimationValues();
         

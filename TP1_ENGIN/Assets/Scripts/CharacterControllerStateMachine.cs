@@ -15,11 +15,11 @@ public class CharacterControllerStateMachine : MonoBehaviour
     [field: SerializeField]
     public float SlowingValue { get; private set; }
     [field: SerializeField]
-    public float FowardRatio { get; private set; }
+    public float MaxFowardVelocity { get; private set; }
     [field: SerializeField]
-    public float SidedRatio { get; private set; }
+    public float MaxSidedVelocity { get; private set; }
     [field: SerializeField]
-    public float MaxBackVelocity { get; private set; }
+    public float MaxBackward { get; private set; }
     [field: SerializeField]
     public float JumpIntensity { get; private set; }
     

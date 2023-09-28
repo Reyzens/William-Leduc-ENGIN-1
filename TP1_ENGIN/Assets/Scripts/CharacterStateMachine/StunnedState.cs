@@ -35,25 +35,9 @@ public class StunnedState : CharacterState
 
     public override bool CanEnter(CharacterState currentState)
     {
-        if (currentState is JumpState)
+        if (Input.GetKeyDown(KeyCode.E))
         {
-            m_stateMachine.IsStunned();
-        }
-        if (currentState is FreeState)
-        {
-            if(Input.GetKeyDown(KeyCode.E))
-            {
-                return true;
-            }
-            m_stateMachine.IsStunned();
-        }
-        if (currentState is FallingState)
-        {
-            m_stateMachine.IsStunned();
-        }
-        if (currentState is OnHitState)
-        {
-            m_stateMachine.IsStunned();
+            return true;
         }
         return false;
     }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OnHitState : CharacterState
 {
-    private const float STATE_EXIT_TIMER = 1f;
+    private const float STATE_EXIT_TIMER = 0.7f;
     private float m_currentStateTimer = 0.0f;
 
     public override void OnEnter()

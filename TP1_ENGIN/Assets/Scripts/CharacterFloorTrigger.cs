@@ -9,6 +9,7 @@ public class CharacterFloorTrigger : MonoBehaviour
         if (!IsOnFloor)
         {
             Debug.Log("Vient de toucher le sol");
+            
         }
         IsOnFloor = true;
     }

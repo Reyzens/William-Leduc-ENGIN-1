@@ -77,8 +77,8 @@ public class FreeState : CharacterState
     {
         if (currentState is JumpState)
         {
-            //Je ne peux entrer dans le FreeState que si je touche le sol
-            return m_stateMachine.IsInContactWithFloor();
+            if (m_stateMachine.IsInContactWithFloor() && m_stateMachine.CharacterJumpDistance() <= 3.0f) 
+            {  return true; }
         }
         if (currentState is AttackingState)
         {

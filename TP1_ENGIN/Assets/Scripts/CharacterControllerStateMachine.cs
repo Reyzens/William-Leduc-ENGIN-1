@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditorInternal;
 using UnityEngine;
 
 public class CharacterControllerStateMachine : MonoBehaviour
@@ -65,7 +66,9 @@ public class CharacterControllerStateMachine : MonoBehaviour
     {
         Animator.SetBool("TouchGround", m_floorTrigger.IsOnFloor);
         m_currentState.OnUpdate();
+        CharacterJumpDistance();
         TryStateTransition();
+        
         
        
         
@@ -133,7 +136,9 @@ public class CharacterControllerStateMachine : MonoBehaviour
     public float CharacterJumpDistance()
     {
         float dist = m_playerCharacterPositionBeforeJump.y - m_playerCharacterPositionAfterJump.y;
-        return Mathf.Abs(dist);
+       
+        return dist;
+       
     }
 
     public void UpdateMovementAnimationValues()

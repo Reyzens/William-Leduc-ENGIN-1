@@ -11,6 +11,7 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Vector2 m_cameraClamping = Vector2.zero;
 
+
     // Update is called once per frame
     void Update()
     {

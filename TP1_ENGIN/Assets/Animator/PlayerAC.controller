@@ -922,7 +922,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: de1a60b80fcf42a286dae3911e439576, type: 3}
+  m_Motion: {fileID: 7400000, guid: eb1d4e13df986aa44a1512af819e877c, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -966,20 +966,20 @@ AnimatorStateMachine:
   - {fileID: -2001551148769847673}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -7209793091022797097}
-    second:
-    - {fileID: -5516867634978025172}
-  - first: {fileID: -861327562973581327}
-    second:
-    - {fileID: 7413305804322193653}
-    - {fileID: -2086174667361117200}
-  - first: {fileID: 1150086899301472632}
-    second:
-    - {fileID: 722722346285458739}
   - first: {fileID: 1438659887240192462}
     second:
     - {fileID: 264228441873745139}
     - {fileID: -344285118424243209}
+  - first: {fileID: -861327562973581327}
+    second:
+    - {fileID: 7413305804322193653}
+    - {fileID: -2086174667361117200}
+  - first: {fileID: -7209793091022797097}
+    second:
+    - {fileID: -5516867634978025172}
+  - first: {fileID: 1150086899301472632}
+    second:
+    - {fileID: 722722346285458739}
   - first: {fileID: 3975818072958920384}
     second:
     - {fileID: -5563350703772713818}

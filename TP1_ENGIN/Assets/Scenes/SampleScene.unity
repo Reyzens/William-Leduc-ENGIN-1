@@ -5211,6 +5211,7 @@ MonoBehaviour:
   m_movementPositionVector: {x: 0, y: 0, z: 0}
   m_playerCharacterPositionBeforeJump: {x: 0, y: 0, z: 0}
   m_playerCharacterPositionAfterJump: {x: 0, y: 0, z: 0}
+  m_airControlSpeed: 0
   m_floorTrigger: {fileID: 859481462}
 --- !u!54 &1697154395
 Rigidbody:
@@ -5602,6 +5603,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 742989190988436437, guid: 6652e5bbf84a6814fbe5887466504156,
         type: 3}
+      propertyPath: m_airControlSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 742989190988436437, guid: 6652e5bbf84a6814fbe5887466504156,
+        type: 3}
       propertyPath: <RB>k__BackingField
       value: 
       objectReference: {fileID: 2068721283}
@@ -5884,6 +5890,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3750497878748343107, guid: 6652e5bbf84a6814fbe5887466504156,
+        type: 3}
+      propertyPath: m_desireDistance
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 3750497878748343107, guid: 6652e5bbf84a6814fbe5887466504156,
         type: 3}

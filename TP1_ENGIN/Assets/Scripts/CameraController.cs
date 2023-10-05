@@ -12,35 +12,34 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private Vector2 m_cameraClamping = Vector2.zero;
     [SerializeField]
-    private float m_desireDistance = -3;
+    private float m_desireDistance;
+    [SerializeField]
+    private float m_lerpspeed = 5.0f;
+    [SerializeField]
+    private float smoothFactor;
+    private bool isCameraClamped = false;
+    private bool isCameraObstructed = false;
 
-    bool InContact;
 
     // Update is called once per frame
     void Update()
     {
         UpdateHorizontalMovements();
         UpdateVerticalMovements();
-       if (InContact == false)
-        {
-            UpdateCameraScroll();
-        }
-        
-        
-        
-        
-        
+      
+        UpdateCameraScroll();
+ 
     }
 
+    public void OnStart()
+    {
+        m_desireDistance = Vector3.Distance(transform.position, m_objectToLookAt.position);
+    }
     private void FixedUpdate()
     {
         
         MoveCameraInFrontOfObstructionsFUpdate();
-        
-           
-           
-        
-        
+            
     }
 
     private void UpdateHorizontalMovements()
@@ -66,13 +65,13 @@ public class CameraController : MonoBehaviour
         }
         transform.RotateAround(m_objectToLookAt.position, transform.right, currentAngleY);
     }
-    
+
     private void UpdateCameraScroll()
     {
         if (Input.mouseScrollDelta.y != 0)
         {
             var distanceCameraToCharacter = transform.position - m_objectToLookAt.position;
-            var CurrentDistance = distanceCameraToCharacter.magnitude;
+            var currentDistance = distanceCameraToCharacter.magnitude;
 
             m_desireDistance += Input.mouseScrollDelta.y * 1;
 
@@ -80,60 +79,106 @@ public class CameraController : MonoBehaviour
             m_desireDistance = Mathf.Clamp(m_desireDistance, -10f, -2f);
 
             Debug.Log(m_desireDistance);
-            transform.Translate(Vector3.forward * Input.mouseScrollDelta.y, Space.Self);
 
-            //TODO: Faire une vérification selon la distance la plus proche ou la plus éloignée
-            //Que je souhaite entre ma caméra et mon objet
-            if (CurrentDistance <= m_cameraClamping.x)
+            // Calculate the target position based on clamped distance
+            var targetPosition = m_objectToLookAt.position + transform.forward * -m_desireDistance;
+
+            // Smoothly move the camera to the target position using Lerp
+            transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * smoothFactor);
+
+            // Check for clamped distances and set the flag
+            if (currentDistance <= m_cameraClamping.x)
             {
-                transform.Translate(-Vector3.forward * m_cameraClamping.x, Space.Self);
+                isCameraClamped = true;
             }
-            if (CurrentDistance >= m_cameraClamping.y)
+            else if (currentDistance >= m_cameraClamping.y)
             {
-                transform.Translate(Vector3.forward * m_cameraClamping.x, Space.Self);
+                isCameraClamped = true;
+            }
+            else
+            {
+                isCameraClamped = false;
             }
 
-
-
-            //TODO: Lerp plutôt que d'effectuer immédiatement la translation de la caméra
-
+            // Apply the clamped position only once when the camera is clamped
+            if (isCameraClamped)
+            {
+                if (currentDistance <= m_cameraClamping.x)
+                {
+                    var clampedPosition = m_objectToLookAt.position + transform.forward * -m_cameraClamping.x;
+                    transform.position = clampedPosition;
+                }
+                if (currentDistance >= m_cameraClamping.y)
+                {
+                    var clampedPosition = m_objectToLookAt.position + transform.forward * -m_cameraClamping.y;
+                    transform.position = clampedPosition;
+                }
+            }
         }
     }
-    
+
+
+
     private void MoveCameraInFrontOfObstructionsFUpdate()
     {
         // Bit shift the index of the layer (8) to get a bit mask
         int layerMask = 1 << 8;
 
         RaycastHit hit;
-        
 
         var vecteurDiff = transform.position - m_objectToLookAt.position;
         var distance = vecteurDiff.magnitude;
         vecteurDiff.Normalize();
 
-        //Debug.DrawRay(m_objectToLookAt.position, vecteurDiff.normalized * -m_desireDistance, Color.yellow);
-
-        if (Physics.Raycast(m_objectToLookAt.position, vecteurDiff  , out hit, distance, layerMask))
+        if (Physics.Raycast(m_objectToLookAt.position, vecteurDiff, out hit, distance, layerMask))
         {
             // There is an obstruction between the focus and the camera
-            
             Debug.DrawRay(m_objectToLookAt.position, vecteurDiff.normalized * hit.distance, Color.yellow);
-            transform.SetPositionAndRotation(hit.point, transform.rotation);
+
+            // Set the obstruction flag
+            isCameraObstructed = true;
+
+            // Calculate the new camera position in front of the obstruction
+            Vector3 newCameraPosition = hit.point + (vecteurDiff.normalized * 0.1f); // Move slightly in front of the obstruction
+
+            // Smoothly move the camera to the new position using Lerp
+            transform.position = Vector3.Lerp(transform.position, newCameraPosition, Time.deltaTime * m_lerpspeed);
         }
         else
         {
-            
-           if (Vector3.Distance(transform.position, m_objectToLookAt.position) <= m_desireDistance)
-           {
-               transform.Translate((-transform.forward) * 2, Space.Self);
-           }
-           // No obstruction and m_isObstruct was true in the previous frame
-           Debug.DrawRay(m_objectToLookAt.position, vecteurDiff, Color.white);
-           
-           
-           // Reposition the camera to the desired distance from the object
+            // No obstruction
+            Debug.DrawRay(m_objectToLookAt.position, vecteurDiff, Color.white);
 
+            // If the camera was obstructed in the previous frame, smoothly move it back to the desired position
+            if (isCameraObstructed)
+            {
+                Vector3 targetPosition = m_objectToLookAt.position + (vecteurDiff.normalized * -m_desireDistance);
+                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * m_lerpspeed);
+
+                // Check if the camera is close enough to the desired position, and if so, clear the obstruction flag
+                if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+                {
+                    isCameraObstructed = false;
+                }
+            }
+            else
+            {
+                // Camera is not obstructed, allow for regular camera movement here
+                // For example, you can handle camera movement using Input.mouseScrollDelta here
+                var scrollDelta = Input.mouseScrollDelta.y;
+                if (scrollDelta != 0)
+                {
+                    // Adjust the m_desireDistance based on scroll input
+                    m_desireDistance += scrollDelta * 1;
+                    m_desireDistance = Mathf.Clamp(m_desireDistance, -10f, -2f);
+                }
+
+                // Calculate the target position based on m_desireDistance
+                Vector3 targetPosition = m_objectToLookAt.position + (vecteurDiff.normalized * -m_desireDistance);
+
+                // Smoothly move the camera to the target position using Lerp
+                transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * m_lerpspeed);
+            }
         }
     }
 

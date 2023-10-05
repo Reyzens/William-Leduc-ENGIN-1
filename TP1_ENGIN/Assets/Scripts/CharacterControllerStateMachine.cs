@@ -27,6 +27,7 @@ public class CharacterControllerStateMachine : MonoBehaviour
     public Vector3 m_movementPositionVector = Vector3.zero;
     public Vector3 m_playerCharacterPositionBeforeJump = Vector3.zero;
     public Vector3 m_playerCharacterPositionAfterJump = Vector3.zero;
+    public float m_airControlSpeed;
 
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
@@ -136,7 +137,7 @@ public class CharacterControllerStateMachine : MonoBehaviour
     public float CharacterJumpDistance()
     {
         float dist = m_playerCharacterPositionBeforeJump.y - m_playerCharacterPositionAfterJump.y;
-       
+        
         return dist;
        
     }

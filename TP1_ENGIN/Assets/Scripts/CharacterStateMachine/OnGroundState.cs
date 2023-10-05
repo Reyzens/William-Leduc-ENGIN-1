@@ -34,7 +34,7 @@ public class OnGroundState : CharacterState
     {
         if(currentState is JumpState)
         {
-            if(m_stateMachine.CharacterJumpDistance() >= 3.0f)
+            if (m_stateMachine.CharacterJumpDistance() >= 3.0f)
             {
                 return true;
             }
@@ -48,7 +48,7 @@ public class OnGroundState : CharacterState
         }
         if (currentState is FallingState)
         {
-            if (m_stateMachine.IsInContactWithFloor() && m_stateMachine.CharacterJumpDistance() >= 3.0f)
+            if (m_stateMachine.CharacterJumpDistance() >= 3.0f)
             {
                 return true;
             }

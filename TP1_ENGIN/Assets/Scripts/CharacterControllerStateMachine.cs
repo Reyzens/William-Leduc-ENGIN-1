@@ -22,13 +22,14 @@ public class CharacterControllerStateMachine : MonoBehaviour
     public float MaxBackward { get; private set; }
     [field: SerializeField]
     public float JumpIntensity { get; private set; }
-    
 
+    public HitBox m_Box;
     public Vector3 m_movementPositionVector = Vector3.zero;
     public Vector3 m_playerCharacterPositionBeforeJump = Vector3.zero;
     public Vector3 m_playerCharacterPositionAfterJump = Vector3.zero;
     public float m_airControlSpeed;
 
+    public bool m_EnableAttackEvent;
     [SerializeField]
     private CharacterFloorTrigger m_floorTrigger;
     
@@ -113,9 +114,15 @@ public class CharacterControllerStateMachine : MonoBehaviour
         return m_floorTrigger.IsOnFloor;
     }
 
-    public bool IsAttacking()
+    public void EnableAttackHitBox()
     {
-        return Animator.GetBool("IsAttacking");
+
+        m_Box.EnableHitCollider();
+    }
+    public void DisableAttackHitBox()
+    {
+
+        m_Box.DisableHitCollider();
     }
     
     public bool IsStunned()

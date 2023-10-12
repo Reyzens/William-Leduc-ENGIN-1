@@ -14,7 +14,9 @@ public class AttackingState : CharacterState
 
     public override void OnExit()
     {
+        m_stateMachine.DisableAttackHitBox();
         Debug.Log("Exit state: Attacking\n");
+        
     }
 
     public override void OnFixedUpdate()

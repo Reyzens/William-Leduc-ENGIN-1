@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class EventDispatch : MonoBehaviour
 {
-    
-    public CharacterControllerStateMachine m_CharacterRef;
+    public HitBox m_box;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,16 +15,5 @@ public class EventDispatch : MonoBehaviour
     void Update()
     {
         
-    }
-
-    public void EnableHitCollider()
-    {
-
-        m_CharacterRef.EnableAttackHitBox();
-     
-    }
-    public void DisableHitCollider()
-    {
-        m_CharacterRef.DisableAttackHitBox();
     }
 }

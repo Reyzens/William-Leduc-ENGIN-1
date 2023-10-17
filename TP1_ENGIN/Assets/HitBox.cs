@@ -18,13 +18,20 @@ public class HitBox : MonoBehaviour
         
     }
 
-    public void EnableHitCollider() 
+    public void EnableHitCollider()
     {
 
-        hitboxCollider.isTrigger = true;
+        hitboxCollider.enabled = true;
+
         Debug.Log(hitboxCollider.enabled);
     }
 
-   
+    public void DisableHitCollider()
+    {
+        hitboxCollider.enabled = false;
+
+    }
+
+
 
 }

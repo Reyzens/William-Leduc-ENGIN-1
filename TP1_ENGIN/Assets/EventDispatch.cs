@@ -4,16 +4,16 @@ using UnityEngine;
 
 public class EventDispatch : MonoBehaviour
 {
-    public HitBox m_box;
+    public CharacterControllerStateMachine m_CharacterRef;
     // Start is called before the first frame update
-    void Start()
+    public void EnableHitCollider()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+        m_CharacterRef.EnableAttackHitBox();
+
+    }
+    public void DisableHitCollider()
     {
-        
+        m_CharacterRef.DisableAttackHitBox();
     }
 }

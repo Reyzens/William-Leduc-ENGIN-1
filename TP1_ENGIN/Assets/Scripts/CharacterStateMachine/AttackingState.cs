@@ -14,7 +14,9 @@ public class AttackingState : CharacterState
 
     public override void OnExit()
     {
+        m_stateMachine.DisableAttackHitBox();
         Debug.Log("Exit state: Attacking\n");
+
     }
 
     public override void OnFixedUpdate()
@@ -26,7 +28,7 @@ public class AttackingState : CharacterState
         m_currentStateTimer -= Time.deltaTime;
     }
 
-    public override bool CanEnter(CharacterState currentState)
+    public override bool CanEnter(IState currentState)
     {
         if (currentState is FreeState)
         {

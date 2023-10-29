@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AttackingState : CharacterState
@@ -26,6 +27,7 @@ public class AttackingState : CharacterState
     public override void OnUpdate()
     {
         m_currentStateTimer -= Time.deltaTime;
+        
     }
 
     public override bool CanEnter(IState currentState)
@@ -41,4 +43,6 @@ public class AttackingState : CharacterState
     {
         return m_currentStateTimer <= 0;
     }
+
+    
 }

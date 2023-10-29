@@ -26,7 +26,9 @@ public class CameraController : MonoBehaviour
     {
         UpdateHorizontalMovements();
         UpdateVerticalMovements();
-      
+        
+
+
         UpdateCameraScroll();
  
     }
@@ -42,12 +44,7 @@ public class CameraController : MonoBehaviour
             
     }
 
-    private void UpdateHorizontalMovements()
-    {
-        float currentAngleX = Input.GetAxis("Mouse X") * m_rotationSpeed;
-        transform.RotateAround(m_objectToLookAt.position, m_objectToLookAt.up, currentAngleX);
-        
-    }
+   
 
     private void UpdateVerticalMovements()
     {
@@ -64,6 +61,12 @@ public class CameraController : MonoBehaviour
             return;
         }
         transform.RotateAround(m_objectToLookAt.position, transform.right, currentAngleY);
+    }
+
+    private void UpdateHorizontalMovements()
+    {
+        float currentAngleX = Input.GetAxis("Mouse X") * m_rotationSpeed;
+        m_objectToLookAt.transform.Rotate(new Vector3(0, currentAngleX, 0), Space.World);
     }
 
     private void UpdateCameraScroll()

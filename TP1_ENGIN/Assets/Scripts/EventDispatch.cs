@@ -24,4 +24,12 @@ public class EventDispatch : MonoBehaviour
     {
         m_CharacterRef.EnableHitVFX();
     }
+    public void EnableSlowMotion()
+    {
+        m_CharacterRef.EnableSlowMotion();
+    }
+    public void DisableSlowMotion() 
+    {
+        m_CharacterRef.DisableSlowMotion();
+    }
 }

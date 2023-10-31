@@ -41,6 +41,14 @@ public class HitBox : MonoBehaviour
     {
         VFXManager.Instance.PlayVFX("Hit");
     }
+    public void EnableSlowMotion()
+    {
+        Time.timeScale = 0.5f;
+    }
+    public void DisableSlowMotion()
+    {
+        Time.timeScale = 1f;
+    }
 
 
 

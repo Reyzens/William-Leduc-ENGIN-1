@@ -23,6 +23,8 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
     public float JumpIntensity { get; private set; }
     [field: SerializeField]
     public bool InCinematic;
+    [SerializeField]
+    public Cinemachine.CinemachineVirtualCamera m_camera;
 
     public HitBox m_Box;
     public Vector3 m_movementPositionVector = Vector3.zero;
@@ -43,7 +45,7 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
         m_possibleStates.Add(new FreeState());
         m_possibleStates.Add(new JumpState());
         m_possibleStates.Add(new FallingState());
-        m_possibleStates.Add(new OnHitState());
+        m_possibleStates.Add(new OnHitState(m_camera));
         m_possibleStates.Add(new OnGroundState());
         m_possibleStates.Add(new AttackingState());
         m_possibleStates.Add(new OnGettingUpState());
@@ -154,6 +156,14 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
     public void EnableHitVFX()
     {
         m_Box.EnableHitVFX();
+    }
+    public void EnableSlowMotion()
+    {
+        m_Box.EnableSlowMotion();
+    }
+    public void DisableSlowMotion()
+    {
+        m_Box.DisableSlowMotion();
     }
 
 }

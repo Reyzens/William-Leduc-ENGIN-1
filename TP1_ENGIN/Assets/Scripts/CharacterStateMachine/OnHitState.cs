@@ -1,19 +1,34 @@
+using Cinemachine;
 using UnityEngine;
 
 public class OnHitState : CharacterState
 {
     private const float STATE_EXIT_TIMER = 0.7f;
     private float m_currentStateTimer = 0.0f;
+    protected Cinemachine.CinemachineVirtualCamera m_camera;
+
+    public OnHitState(Cinemachine.CinemachineVirtualCamera camera)
+    {
+        m_camera = camera;
+    }
+
 
     public override void OnEnter()
     {
         Debug.Log("Enter state: Hit\n");
         m_currentStateTimer = STATE_EXIT_TIMER;
         m_stateMachine.Animator.SetTrigger("OnHit");
+        m_camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 1;
+        m_camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 1;
+        AudioManager.Instance.PlaySFX("Punch");
+
+
     }
 
     public override void OnExit()
     {
+        m_camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_FrequencyGain = 0;
+        m_camera.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>().m_AmplitudeGain = 0;
         Debug.Log("Exit state: Hit\n");
     }
 

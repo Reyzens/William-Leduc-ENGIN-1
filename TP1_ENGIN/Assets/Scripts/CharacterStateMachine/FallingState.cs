@@ -16,6 +16,8 @@ public class FallingState : CharacterState
 
     public override void OnExit()
     {
+        AudioManager.Instance.PlaySFX("Land");
+        VFXManager.Instance.PlayVFX("Land");
         Debug.Log("Exit state: Falling\n");
     }
 

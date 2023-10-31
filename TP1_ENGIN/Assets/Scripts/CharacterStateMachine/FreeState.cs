@@ -6,6 +6,7 @@ public class FreeState : CharacterState
     public override void OnEnter()
     {
         Debug.Log("Enter state: FreeState\n");
+        
     }
 
     public override void OnUpdate()

@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class GameManagerSM : BaseStateMachine<IState>
 {
     [SerializeField]
-    protected Camera m_gameplayCamera;
+    protected Cinemachine.CinemachineVirtualCamera m_gameplayCamera;
     [SerializeField]
-    protected Camera m_cinematicCamera;
+    protected Cinemachine.CinemachineVirtualCamera m_cinematicCamera;
 
     protected override void CreatePossibleStates()
     {

@@ -16,4 +16,12 @@ public class EventDispatch : MonoBehaviour
     {
         m_CharacterRef.DisableAttackHitBox();
     }
+    public void EnableHitSound()
+    {
+        m_CharacterRef.EnableHitSound();
+    }
+    public void EnableHitVFX()
+    {
+        m_CharacterRef.EnableHitVFX();
+    }
 }

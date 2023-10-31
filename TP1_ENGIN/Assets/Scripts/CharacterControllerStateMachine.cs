@@ -77,7 +77,7 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
         //Set2dRelativeVelocity();
     }
 
-    
+
 
     public bool IsInContactWithFloor()
     {
@@ -130,6 +130,15 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
 
         m_Box.DisableHitCollider();
     }
+    public void EnableHitSound()
+    {
+        m_Box.EnableHitSound();
+    }
+    public void EnableHitVFX()
+    {
+        m_Box.EnableHitVFX();
+    }
+
 }
 
  

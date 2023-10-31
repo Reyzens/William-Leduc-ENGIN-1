@@ -10,6 +10,7 @@ public class OnGroundState : CharacterState
         Debug.Log("Enter state: Ground\n");
         m_stateMachine.Animator.SetBool("Die", true);
         m_currentStateTimer = STATE_EXIT_TIMER;
+        
 
 
     }

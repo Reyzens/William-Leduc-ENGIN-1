@@ -9,6 +9,7 @@ public class AttackingState : CharacterState
     {
         Debug.Log("Enter state: Attacking\n");
         m_stateMachine.Animator.SetTrigger("OnAttack");
+        
 
 
     }
@@ -17,6 +18,7 @@ public class AttackingState : CharacterState
     {
         m_stateMachine.DisableAttackHitBox();
         Debug.Log("Exit state: Attacking\n");
+
 
     }
 

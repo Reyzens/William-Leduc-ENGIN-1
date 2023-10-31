@@ -14,10 +14,14 @@ public class JumpState : CharacterState
         m_stateMachine.RB.AddForce(Vector3.up * m_stateMachine.JumpIntensity, ForceMode.Acceleration);
         m_currentStateTimer = STATE_EXIT_TIMER;
         m_stateMachine.m_playerCharacterPositionBeforeJump = m_stateMachine.RB.position;
+        AudioManager.Instance.PlaySFX("Jump");
+        VFXManager.Instance.PlayVFX("Jump");
     }
 
     public override void OnExit()
     {
+        AudioManager.Instance.PlaySFX("Land");
+        VFXManager.Instance.PlayVFX("Land");
         Debug.Log("Exit state: JumpState\n");
     }
 

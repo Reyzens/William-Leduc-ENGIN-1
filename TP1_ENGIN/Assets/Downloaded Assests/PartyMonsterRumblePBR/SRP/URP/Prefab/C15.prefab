@@ -580,7 +580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53444b48a8fa7ef49ad77f76d1e405b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_box: {fileID: 5657292362548736706}
+  m_CharacterRef: {fileID: 0}
 --- !u!1 &349119031024593202
 GameObject:
   m_ObjectHideFlags: 0
@@ -3009,10 +3009,12 @@ MonoBehaviour:
   <MaxSidedVelocity>k__BackingField: 2
   <MaxBackward>k__BackingField: 1
   <JumpIntensity>k__BackingField: 400
+  m_Box: {fileID: 0}
   m_movementPositionVector: {x: 0, y: 0, z: 0}
   m_playerCharacterPositionBeforeJump: {x: 0, y: 0, z: 0}
   m_playerCharacterPositionAfterJump: {x: 0, y: 0, z: 0}
   m_airControlSpeed: 10
+  m_EnableAttackEvent: 0
   m_floorTrigger: {fileID: 7384993342559350597}
 --- !u!1 &1936812549034968398
 GameObject:
@@ -3300,6 +3302,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2778036993261523852}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2118533048373916180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6499689599758707755}
+  - component: {fileID: 2769781261460630441}
+  m_Layer: 0
+  m_Name: cm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6499689599758707755
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118533048373916180}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.21494928, y: -0, z: -0, w: 0.9766252}
+  m_LocalPosition: {x: 6.4625363, y: -2.7151504, z: -3.462839}
+  m_LocalScale: {x: 0.2513384, y: 0.2513384, z: 0.25133836}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3942906804410631173}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2769781261460630441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2118533048373916180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2118929224078294293
 GameObject:
   m_ObjectHideFlags: 0
@@ -13097,6 +13143,7 @@ GameObject:
   - component: {fileID: 2537883079558089400}
   - component: {fileID: 8696492952560175747}
   - component: {fileID: 5488113316353830860}
+  - component: {fileID: 3798200960553143199}
   m_Layer: 9
   m_Name: Main Camera (1)
   m_TagString: MainCamera
@@ -13116,7 +13163,8 @@ Transform:
   m_LocalPosition: {x: -0.09049201, y: 3.95, z: -4.5}
   m_LocalScale: {x: 3.9787, y: 3.9786994, z: 3.9787006}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 6499689599758707755}
   m_Father: {fileID: 1142497410678868801}
   m_LocalEulerAnglesHint: {x: 24.825, y: 0, z: 0}
 --- !u!20 &2130615996452444041
@@ -13241,3 +13289,42 @@ MonoBehaviour:
   m_desireDistance: -4
   m_lerpspeed: 5
   smoothFactor: 0
+--- !u!114 &3798200960553143199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9212171717950593588}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45e653bab7fb20e499bda25e1b646fea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ExcludedPropertiesInInspector:
+  - m_Script
+  m_LockStageInInspector: 
+  m_StreamingVersion: 20170927
+  m_Priority: 10
+  m_StandbyUpdate: 2
+  m_LookAt: {fileID: 1142497410678868801}
+  m_Follow: {fileID: 1142497410678868801}
+  m_Lens:
+    FieldOfView: 40
+    OrthographicSize: 10
+    NearClipPlane: 0.1
+    FarClipPlane: 5000
+    Dutch: 0
+    ModeOverride: 0
+    LensShift: {x: 0, y: 0}
+    GateFit: 2
+    FocusDistance: 10
+    m_SensorSize: {x: 1, y: 1}
+  m_Transitions:
+    m_BlendHint: 0
+    m_InheritPosition: 0
+    m_OnCameraLive:
+      m_PersistentCalls:
+        m_Calls: []
+  m_LegacyBlendHint: 0
+  m_ComponentOwner: {fileID: 6499689599758707755}

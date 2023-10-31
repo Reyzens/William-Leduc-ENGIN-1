@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class CinematicState : IState
 {
-    protected Camera m_camera;
+    protected Cinemachine.CinemachineVirtualCamera m_camera;
 
-    public CinematicState(Camera camera)
+    public CinematicState(Cinemachine.CinemachineVirtualCamera camera)
     {
         m_camera = camera;
     }

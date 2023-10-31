@@ -32,6 +32,16 @@ public class HitBox : MonoBehaviour
 
     }
 
+    public void EnableHitSound()
+    {
+        AudioManager.Instance.PlaySFX("Hit");
+    }
+
+    public void EnableHitVFX()
+    {
+        VFXManager.Instance.PlayVFX("Hit");
+    }
+
 
 
 }

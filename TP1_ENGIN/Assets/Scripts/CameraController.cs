@@ -16,7 +16,11 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float m_lerpspeed = 5.0f;
     [SerializeField]
+
     private float smoothFactor;
+    [SerializeField]
+    private CharacterControllerStateMachine m_CharacterRef;
+
     private bool isCameraClamped = false;
     private bool isCameraObstructed = false;
 
@@ -24,12 +28,20 @@ public class CameraController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        UpdateHorizontalMovements();
-        UpdateVerticalMovements();
-        
+        if(m_CharacterRef.InCinematic == true)
+        {
+            return;
+        }
+        else
+        {
+            UpdateHorizontalMovements();
+            UpdateVerticalMovements();
 
 
-        UpdateCameraScroll();
+
+            UpdateCameraScroll();
+        }
+       
  
     }
 

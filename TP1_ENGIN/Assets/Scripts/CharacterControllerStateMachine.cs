@@ -21,6 +21,8 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
     public float MaxBackward { get; private set; }
     [field: SerializeField]
     public float JumpIntensity { get; private set; }
+    [field: SerializeField]
+    public bool InCinematic;
 
     public HitBox m_Box;
     public Vector3 m_movementPositionVector = Vector3.zero;
@@ -44,6 +46,10 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
         m_possibleStates.Add(new OnHitState());
         m_possibleStates.Add(new OnGroundState());
         m_possibleStates.Add(new AttackingState());
+        m_possibleStates.Add(new OnGettingUpState());
+        m_possibleStates.Add(new StunnedState());
+        
+
     }
 
     // Start is called before the first frame update
@@ -57,15 +63,26 @@ public class CharacterControllerStateMachine : BaseStateMachine<CharacterState>
         m_currentState.OnEnter();
 
         Camera = Camera.main;
+
+        InCinematic = true;
     }
 
     protected override void Update()
     {
-        Animator.SetBool("TouchGround", m_floorTrigger.IsOnFloor);
-        m_currentState.OnUpdate();
-        CharacterJumpDistance();
-        TryStateTransition();
-        base.Update();
+        if(InCinematic == true)
+        {
+
+            return;
+        }
+        else
+        {
+            Animator.SetBool("TouchGround", m_floorTrigger.IsOnFloor);
+            m_currentState.OnUpdate();
+            CharacterJumpDistance();
+            TryStateTransition();
+            base.Update();
+        }
+        
         //UpdateAnimatorValues();
     }
 

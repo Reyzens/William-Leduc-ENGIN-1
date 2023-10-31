@@ -5,7 +5,7 @@ public class FreeState : CharacterState
 {
     public override void OnEnter()
     {
-        Debug.Log("Enter state: FreeState\n");
+        Debug.Log("Enter state: Cinematic\n");
         
     }
 
@@ -71,7 +71,7 @@ public class FreeState : CharacterState
 
     public override void OnExit()
     {
-        Debug.Log("Exit state: FreeState\n");
+        Debug.Log("Exit state: Cinematic\n");
     }
 
     public override bool CanEnter(IState currentState)
@@ -106,6 +106,7 @@ public class FreeState : CharacterState
             //CONDITIONS
             return m_stateMachine.IsStunned();
         }
+       
         return false;
     }
     

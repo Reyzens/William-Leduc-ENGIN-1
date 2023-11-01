@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class CinematicState : IState
 {
@@ -8,7 +9,9 @@ public class CinematicState : IState
 
     public CharacterControllerStateMachine m_CharacterRef;
 
-    public CinematicState(Cinemachine.CinemachineVirtualCamera camera, Cinemachine.CinemachineDollyCart cart, CharacterControllerStateMachine CCSM)
+    public PlayableDirector m_intro;
+
+    public CinematicState(Cinemachine.CinemachineVirtualCamera camera, Cinemachine.CinemachineDollyCart cart, CharacterControllerStateMachine CCSM, PlayableDirector intro)
     {
         if (camera == null)
         {
@@ -30,6 +33,7 @@ public class CinematicState : IState
         m_camera = camera;
         m_cinematicCart = cart;
         m_CharacterRef = CCSM;
+        m_intro = intro;
     }
 
     public bool CanEnter(IState currentState)
@@ -44,6 +48,7 @@ public class CinematicState : IState
 
     public void OnEnter()
     {
+        m_intro.Play();
         m_CharacterRef.InCinematic = true;
         Debug.Log("On Enter CinematicState");
         if (m_cinematicCart.m_Position != 0)
@@ -56,6 +61,7 @@ public class CinematicState : IState
 
     public void OnExit()
     {
+        m_intro.Stop();
         Debug.Log("On Exit CinematicState");
         m_CharacterRef.InCinematic = false;
         m_camera.enabled = false;
